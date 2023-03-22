@@ -16,6 +16,7 @@ inputs:
 runs:
   using: 'docker'
   image: 'leonerrr/pull-request-labeler:latest'
-  args:
-    - '-c'
-    - 'chmod +x /scripts/label-pull-request.sh && /scripts/label-pull-request.sh'
+  entrypoint: '/scripts/label-pull-request.sh'
+  env:
+    GITHUB_TOKEN: ${{ inputs.github-token }}
+    PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
