@@ -15,8 +15,8 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'your-registry/your-image:latest'
+  image: 'leonerrr/pull-request-labeler:latest'
   entrypoint: '/bin/sh'
   args:
     - '-c'
-    - 'chmod +x /bin/sh/label-pull-request.sh && /bin/sh/label-pull-request.sh'
+    - 'chmod +x /scripts/label-pull-request.sh && /scripts/label-pull-request.sh'
