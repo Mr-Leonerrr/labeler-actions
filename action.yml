@@ -1,0 +1,22 @@
+name: Label Pull Request
+
+description: 'Labels a pull request based on review status'
+
+author: 'Leonardo Natera'
+
+inputs:
+  github-token:
+    description: 'GitHub Token'
+    required: true
+    default: '${{ secrets.GITHUB_TOKEN }}'
+  pull-request-number:
+    description: 'Number of the pull request'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'your-registry/your-image:latest'
+  entrypoint: '/bin/sh'
+  args:
+    - '-c'
+    - 'chmod +x /bin/sh/label-pull-request.sh && /bin/sh/label-pull-request.sh'
