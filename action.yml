@@ -13,6 +13,10 @@ inputs:
     description: 'Number of the pull request'
     required: true
 
+branding:
+    icon: 'check-square'
+    color: 'blue'
+
 runs:
   using: 'docker'
   image: 'leonerrr/pull-request-labeler:latest'

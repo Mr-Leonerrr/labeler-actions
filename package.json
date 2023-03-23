@@ -1,0 +1,34 @@
+{
+  "name": "pull-request-labeler",
+  "version": "1.0.1",
+  "description": "Provide custom options to label pull requests and issues automatically",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr-Leonerrr/labeler-actions.git"
+  },
+  "keywords": [
+    "pull-requests",
+    "actions",
+    "labeler",
+    "docker-action"
+  ],
+  "author": "Leonardo Natera",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Mr-Leonerrr/labeler-actions/issues"
+  },
+  "homepage": "https://github.com/Mr-Leonerrr/labeler-actions#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "@octokit/webhooks-types": "^6.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-plugin-github": "^4.6.1"
+  }
+}
