@@ -1,21 +1,23 @@
-# Hello world docker action
+## Label Pull Request Action
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+The Label Pull Request Action is a custom GitHub action that automatically adds labels to a pull request based on its review status. It supports the following conditions:
 
-## Inputs
+- If half of the reviews are approved, it adds a `status:ready-to-merge` label.
+- If there are conflicts, it adds a `status:conflicts-found` label.
+- If any reviewer has requested changes, it adds a `status:changes-requested` label.
 
-## `who-to-greet`
+### Inputs
 
-**Required** The name of the person to greet. Default `"World"`.
+- `github-token` (required): The GitHub token used to authenticate with the API. You can use the `secrets.GITHUB_TOKEN` token.
 
-## Outputs
+### Usage
 
-## `time`
+To use the action in your workflow, you can add the following step:
 
-The time we greeted you.
-
-## Example usage
-
-uses: actions/hello-world-docker-action@v2
-with:
-who-to-greet: 'Mona the Octocat'
+```yaml
+- name: Label pull request
+  uses: Mr-Leonerrr/labeler-actions@master
+  with:
+    token: ${{ secrets.GITHUB_TOKEN }}
+    pull-request-number: ${{ github.event.pull_request.number }}
+```
