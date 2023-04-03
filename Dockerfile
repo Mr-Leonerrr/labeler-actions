@@ -1,3 +1,5 @@
+LABEL org.opencontainers.image.source="https://github.com/Mr-Leonerrr/labeler-actions"
+
 # Container image that runs your code
 FROM alpine:3.13
 
