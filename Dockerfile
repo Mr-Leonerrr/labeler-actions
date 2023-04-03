@@ -19,6 +19,8 @@ RUN apt-get -yq install \
 
 RUN apt-get install -f libgd3 -y
 
+FROM alpine:3.13
+
 RUN apk add --no-cache jq curl
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
