@@ -9,9 +9,8 @@ jobs:
     permissions:
       contents: read
       issues: write
-      packages:
-        - write
-        - delete
+      packages: write
+      deployments: read
       pull-requests: write
     runs-on: ubuntu-latest
     environment: docker-image-builder
