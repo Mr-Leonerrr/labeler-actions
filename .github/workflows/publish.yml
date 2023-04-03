@@ -23,6 +23,6 @@ jobs:
 
       - name: Building pull-request-labeler docker image
         run: |
-          docker build .  --tag ghcr.io/leonerrr/pull-request-labeler:1.0.1 --tag ghcr.io/leonerrr/pull-request-labeler:latest
-          docker push ghcr.io/leonerrr/pull-request-labeler:1.0.1
-          docker push ghcr.io/leonerrr/pull-request-labeler:latest
+          docker build .  --tag ghcr.io/mr-leonerrr/labeler-actions:1.0.1 --tag ghcr.io/mr-leonerrr/labeler-actions:latest
+          docker push ghcr.io/mr-leonerrr/labeler-actions:1.0.1
+          docker push ghcr.io/mr-leonerrr/labeler-actions:latest
