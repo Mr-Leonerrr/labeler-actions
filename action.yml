@@ -19,8 +19,7 @@ branding:
 
 runs:
   using: 'docker'
-  image: 'leonerrr/pull-request-labeler:latest'
-  entrypoint: '/scripts/label-pull-request.sh'
+  image: 'docker://ghcr.io/mr-leonerrr/labeler-actions:latest'
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
