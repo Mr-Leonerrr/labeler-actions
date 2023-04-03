@@ -6,6 +6,13 @@ on:
 
 jobs:
   publish-action-docker-image:
+    permissions:
+      contents: read
+      issues: write
+      packages:
+        - write
+        - delete
+      pull-requests: write
     runs-on: ubuntu-latest
     environment: docker-image-builder
 
@@ -15,7 +22,7 @@ jobs:
           submodules: true
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2.1.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
