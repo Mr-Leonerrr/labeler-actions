@@ -8,7 +8,7 @@ inputs:
   github-token:
     description: 'GitHub Token'
     required: true
-    default: '${{ secrets.GITHUB_TOKEN }}'
+    default: github.token
   pull-request-number:
     description: 'Number of the pull request'
     required: true
