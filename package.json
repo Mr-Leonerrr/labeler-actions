@@ -1,6 +1,6 @@
 {
   "name": "pull-request-labeler",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Provide custom options to label pull requests and issues automatically",
   "main": "src/index.js",
   "scripts": {
