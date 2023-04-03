@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 REVIEW_STATE=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
   "https://api.github.com/repos/${{ github.repository }}/pulls/${PULL_REQUEST_NUMBER}/reviews" | \
