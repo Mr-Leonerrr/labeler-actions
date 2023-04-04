@@ -6,9 +6,12 @@ The Label Pull Request Action is a custom GitHub action that automatically adds 
 - If there are conflicts, it adds a `status:conflicts-found` label.
 - If any reviewer has requested changes, it adds a `status:changes-requested` label.
 
+> Note: The action will only add labels, it will not remove any existing labels.
+
 ### Inputs
 
 - `github-token` (required): The GitHub token used to authenticate with the API. You can use the `secrets.GITHUB_TOKEN` token.
+- `pull-request-number` (required): The number of the pull request to label.
 
 ### Usage
 
@@ -18,6 +21,6 @@ To use the action in your workflow, you can add the following step:
 - name: Label pull request
   uses: Mr-Leonerrr/labeler-actions@master
   with:
-    token: ${{ secrets.GITHUB_TOKEN }}
+    github-token: ${{ secrets.GITHUB_TOKEN }}
     pull-request-number: ${{ github.event.pull_request.number }}
 ```
