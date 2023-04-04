@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-echo "Reviewing pull request $PULL_REQUEST_NUMBER"
+echo "Reviewing pull request $PULL_REQUEST_NUMBER in $GITHUB_REPOSITORY"
 
 REVIEW_STATE=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-  "https://api.github.com/repos/${{ github.repository }}/pulls/${PULL_REQUEST_NUMBER}/reviews" | \
+  "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PULL_REQUEST_NUMBER}/reviews" | \
   jq -r 'group_by(.user.login) | map({ login: .[0].user.login, state: (map(.state) | unique)[0] })' | \
   jq -r 'group_by(.state) | map({ state: .[0].state, count: length }) | from_entries')
 
