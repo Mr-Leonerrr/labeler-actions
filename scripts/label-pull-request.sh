@@ -2,8 +2,10 @@
 
 echo "Reviewing pull request $PULL_REQUEST_NUMBER in $GITHUB_REPOSITORY"
 
+BASE_URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PULL_REQUEST_NUMBER}"
+
 REVIEW_STATE=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-  "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PULL_REQUEST_NUMBER}/reviews" | \
+  "$BASE_URL/reviews" | \
   jq -r 'group_by(.user.login) | map({ login: .[0].user.login, state: (map(.state) | unique)[0] })' | \
   jq -r 'group_by(.state) | map({ state: .[0].state, count: length }) | from_entries')
 
@@ -13,7 +15,7 @@ if [[ $(echo "$REVIEW_STATE" | jq -r '.APPROVED') -ge $(echo "$REVIEW_STATE" | j
     -H "Content-Type: application/json" \
     -X POST \
     -d '{"labels":["status:ready-to-merge"]}' \
-    "https://api.github.com/repos/${{ github.repository }}/issues/${PULL_REQUEST_NUMBER}/labels"
+    "$BASE_URL/labels"
 fi
 
 if [[ $(echo "$REVIEW_STATE" | jq -r '.CONFLICTING') -gt 0 ]]; then
@@ -22,7 +24,7 @@ if [[ $(echo "$REVIEW_STATE" | jq -r '.CONFLICTING') -gt 0 ]]; then
     -H "Content-Type: application/json" \
     -X POST \
     -d '{"labels":["status:conflicts-found"]}' \
-    "https://api.github.com/repos/${{ github.repository }}/issues/${PULL_REQUEST_NUMBER}/labels"
+    "$BASE_URL/labels"
 fi
 
 if [[ $(echo "$REVIEW_STATE" | jq -r '.CHANGES_REQUESTED') -gt 0 ]]; then
@@ -31,5 +33,5 @@ if [[ $(echo "$REVIEW_STATE" | jq -r '.CHANGES_REQUESTED') -gt 0 ]]; then
     -H "Content-Type: application/json" \
     -X POST \
     -d '{"labels":["status:changes-requested"]}' \
-    "https://api.github.com/repos/${{ github.repository }}/issues/${PULL_REQUEST_NUMBER}/labels"
+    "$BASE_URL/labels"
 fi
