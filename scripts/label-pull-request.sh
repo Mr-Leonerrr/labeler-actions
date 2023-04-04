@@ -6,7 +6,7 @@ BASE_URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/"
 
 REVIEW_STATE=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
   "$BASE_URL/pulls/${PULL_REQUEST_NUMBER}reviews" | \
-  jq -r 'group_by(.user.login) | map({ login: .[0].user.login, state: (map(.state) | unique)[0] })' | \
+  jq -r 'group_by(if has("user") then .user.login else "unknown" end) | map({ login: .[0].user.login, state: (map(.state) | unique)[0] })' | \
   jq -r 'group_by(.state) | map({ state: .[0].state, count: length }) | from_entries')
 
 if [[ $(echo "$REVIEW_STATE" | jq -r '.APPROVED') -ge $(echo "$REVIEW_STATE" | jq -r '.TOTAL / 2') ]]; then
