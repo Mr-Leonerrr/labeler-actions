@@ -1,16 +1,22 @@
 name: Label Pull Request
-
 description: 'Labels a pull request based on review status'
-
 author: 'Leonardo Natera'
 
 inputs:
-  github-token:
+  github_token:
     description: 'GitHub Token'
     required: true
-  pull-request-number:
+  pull_request_number:
     description: 'Number of the pull request'
     required: true
+  ready_to_merge_label:
+    description: 'Label to add when the pull request is ready to merge'
+    required: false
+    default: 'status:ready-to-merge'
+  changes_required_label:
+    description: 'Label to add when the pull request needs review'
+    required: false
+    default: 'status:changes-required'
 
 branding:
     icon: 'check-square'
@@ -20,5 +26,5 @@ runs:
   using: 'docker'
   image: 'docker://ghcr.io/mr-leonerrr/labeler-actions:latest'
   env:
-    GITHUB_TOKEN: ${{ inputs.github-token }}
-    PULL_REQUEST_NUMBER: ${{ inputs.pull-request-number }}
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    PULL_REQUEST_NUMBER: ${{ inputs.pull_request_number }}
