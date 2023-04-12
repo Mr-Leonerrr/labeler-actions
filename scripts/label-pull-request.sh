@@ -21,21 +21,22 @@ TOTAL_COUNT=$((APPROVED_COUNT + CHANGES_REQUESTED_COUNT + COMMENTED_COUNT + DISM
 # Print the pull request review state counts as a JSON object
 echo "{ \"APPROVED\": $APPROVED_COUNT, \"CHANGES_REQUESTED\": $CHANGES_REQUESTED_COUNT, \"COMMENTED\": $COMMENTED_COUNT, \"DISMISSED\": $DISMISSED_COUNT, \"TOTAL\": $TOTAL_COUNT }"
 
-# Check if half or more of the reviews are approved and add the "status:ready-to-merge" label if so
-if [[ $APPROVED_COUNT -ge $((TOTAL_COUNT / 2)) ]]; then
-  echo "Half of reviews are approved. Adding label 'status:ready-to-merge'"
-  curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-    -H "Content-Type: application/json" \
-    -X POST \
-    -d '{"labels":["status:ready-to-merge"]}' \
-    "$BASE_URL/issues/${PULL_REQUEST_NUMBER}/labels"
-fi
-
-# Check if the pull request is not mergeable and add the "status:conflicts-found" label if so
-# Extract the "mergeable" attribute from the pull request information
 MERGEABLE=$(echo "$PULL_REQUEST_INFO" | grep -o '"mergeable":.*,' | cut -d: -f2- | tr -d '",' | tr '[:upper:]' '[:lower:]')
 
-if [[ $MERGEABLE == "false" ]]; then
-  echo "Pull request is not mergeable. Adding label 'status:conflicts-found'"
-  add_label "status:conflicts-found"
+if [ $MERGEABLE = "false" ]; then
+    echo "Pull request is not mergeable. Adding label 'status:conflicts-found'"
+    add_label "status:conflicts-found"
+    exit 0
+fi
+
+if [[ $APPROVED_COUNT -ge $((TOTAL_COUNT / 2)) ]]; then
+    echo "Half of reviews are approved. Adding label 'status:ready-to-merge'"
+    add_label "status:ready-to-merge"
+    exit 0
+fi
+
+if [[ $CHANGES_REQUESTED_COUNT -ge 1 ]]; then
+    echo "There are reviews requesting changes. Adding label 'status:changes-requested'"
+    add_label "status:changes-requested"
+    exit 0
 fi
