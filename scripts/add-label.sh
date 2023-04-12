@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 BASE_URL="https://api.github.com/repos/${GITHUB_REPOSITORY}"
-PULL_REQUEST_NUMBER="5"
 
 add_label()
 {
@@ -16,9 +15,12 @@ add_label()
 
     echo "Request body: $REQUEST_BODY"
 
-    curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-    -H "Content-Type: application/json" \
+    curl -L \
     -X POST \
-    -d REQUEST_BODY \
-    "$BASE_URL/issues/${PULL_REQUEST_NUMBER}/labels"
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $GITHUB_TOKEN" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    -H "Content-Type: application/json" \
+    "$BASE_URL/issues/${PULL_REQUEST_NUMBER}/labels" \
+    -d "$REQUEST_BODY"
 }

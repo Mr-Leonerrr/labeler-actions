@@ -23,7 +23,7 @@ echo "{ \"APPROVED\": $APPROVED_COUNT, \"CHANGES_REQUESTED\": $CHANGES_REQUESTED
 
 MERGEABLE=$(echo "$PULL_REQUEST_INFO" | grep -o '"mergeable":.*,' | cut -d: -f2- | tr -d '",' | tr '[:upper:]' '[:lower:]')
 
-if [ $MERGEABLE = "false" ]; then
+if [[ $MERGEABLE == "false" ]]; then
     echo "Pull request is not mergeable. Adding label 'status:conflicts-found'"
     add_label "status:conflicts-found"
     exit 0
