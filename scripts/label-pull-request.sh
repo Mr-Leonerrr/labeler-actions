@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /opt/scripts/add-label.sh
+source /opt/scripts/handle-labels.sh
 
 echo "Reviewing pull request $PULL_REQUEST_NUMBER in $GITHUB_REPOSITORY"
 
@@ -23,6 +23,7 @@ echo "{ \"APPROVED\": $APPROVED_COUNT, \"CHANGES_REQUESTED\": $CHANGES_REQUESTED
 
 MERGEABLE=$(echo "$PULL_REQUEST_INFO" | grep -o '"mergeable":.*,' | cut -d: -f2- | tr -d '",' | tr '[:upper:]' '[:lower:]')
 
+# Not working yet, actions not running in pull requests with merge conflicts
 if [[ $MERGEABLE == "false" ]]; then
     echo "Pull request is not mergeable. Adding label 'status:conflicts-found'"
     add_label "status:conflicts-found"
@@ -31,12 +32,12 @@ fi
 
 if [[ $APPROVED_COUNT -ge $((TOTAL_COUNT / 2)) ]]; then
     echo "Half of reviews are approved. Adding label 'status:ready-to-merge'"
-    add_label "status:ready-to-merge"
+    add_label $INPUT_READY_TO_MERGE_LABEL
     exit 0
 fi
 
 if [[ $CHANGES_REQUESTED_COUNT -ge 1 ]]; then
     echo "There are reviews requesting changes. Adding label 'status:changes-requested'"
-    add_label "status:changes-requested"
+    add_label $INPUT_CHANGES_REQUESTED_LABEL
     exit 0
 fi
